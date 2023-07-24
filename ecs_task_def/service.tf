@@ -10,7 +10,7 @@ resource "aws_ecs_service" "public" {
   desired_count   = var.service_container_count
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.service_tg.arn
+    target_group_arn = aws_lb_target_group.service_tg.*.arn
     container_name   = aws_ecs_task_definition.containers.family
     container_port   = var.ecs_task_port
   }
@@ -30,6 +30,7 @@ resource "aws_ecs_service" "private" {
   task_definition = aws_ecs_task_definition.containers.arn
   launch_type     = "FARGATE"
   desired_count   = var.service_container_count
+  enable_execute_command =  true
 
   network_configuration {
     subnets          = var.use_default_vpc ?  aws_default_subnet.private_subnets.*.id : var.PRIVATE_SUBNETS

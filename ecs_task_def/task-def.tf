@@ -1,3 +1,6 @@
+locals {
+  container_envvars = jsonencode(var.container_env)
+}
 
 data "template_file" "define-task" {
   template = file("${path.module}/templates/task_def.json.tpl")
@@ -9,6 +12,7 @@ data "template_file" "define-task" {
     ECS_PORT       = "${var.ecs_task_port}"
     CONTAINER_RAM  = "${var.container_ram}"
     CONTAINER_CPU  = "${var.container_cpu}"
+    ENVIRONMENT    = "${local.container_envvars}"
   }
 }
 
@@ -21,5 +25,6 @@ resource "aws_ecs_task_definition" "containers" {
   memory                   = var.task_ram
   cpu                      = var.task_cpu
   execution_role_arn       = aws_iam_role.task_execution_role.arn
+  task_role_arn            = aws_iam_role.task_execution_role.arn
 }
 

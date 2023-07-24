@@ -26,7 +26,7 @@ resource "aws_security_group" "allow_private_traffic" {
   ingress {
     from_port       = var.container_port
     to_port         = var.container_port
-    protocol        = "-1"
+    protocol        = "tcp"
     security_groups = ["${var.requested_security_group_id}"]
   }
 

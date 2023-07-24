@@ -104,3 +104,11 @@ variable "requested_security_group_id" {
   type = string
   default = ""
 }
+
+variable "container_env" {
+  type = list(object({
+    name = string 
+    value = string
+  }))
+  default = []
+}

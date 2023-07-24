@@ -11,7 +11,11 @@
             "containerPort": ${CONTAINER_PORT},
             "hostPort": ${ECS_PORT}
         }
-    ]
+    ],
+    "environment": ${ENVIRONMENT},
+    "linuxParameters": {
+      "initProcessEnabled": true
+    }
   }
 ]
 

@@ -31,6 +31,7 @@ resource "aws_security_group" "loadbalancer-securitygroup" {
 }
 
 resource "aws_lb_target_group" "service_tg" {
+  count       = var.is_public_deployment ? 1 : 0
   name        = "${var.service_name}-tg"
   port        = var.public_endpoint_ports[0]
   protocol    = (var.public_endpoint_ports[0] == 80 || var.public_endpoint_ports[0] == 9080) ? "HTTP" : "HTTPS"
@@ -45,11 +46,12 @@ resource "aws_lb_target_group" "service_tg" {
 
 
 resource "aws_lb_listener" "listener" {
+  count              = var.is_public_deployment ? 1 : 0
   load_balancer_arn = aws_alb.public_gw[0].arn
   port              = var.public_endpoint_ports[0]
   protocol          = (var.public_endpoint_ports[0] == 80 || var.public_endpoint_ports[0] == 9080) ? "HTTP" : "HTTPS"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.service_tg.arn
+    target_group_arn = aws_lb_target_group.service_tg.*.arn
   }
 }
