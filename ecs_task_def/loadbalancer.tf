@@ -7,7 +7,7 @@ resource "aws_alb" "public_gw" {
 }
 
 resource "aws_security_group" "loadbalancer-securitygroup" {
-
+  count              = var.is_public_deployment ? 1 : 0
   vpc_id = var.vpc_id
 
   ingress {
