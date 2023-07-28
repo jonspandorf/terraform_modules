@@ -10,7 +10,7 @@ resource "aws_ecs_service" "public" {
   desired_count   = var.service_container_count
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.service_tg.*.arn
+    target_group_arn = aws_lb_target_group.service_tg[0].arn
     container_name   = aws_ecs_task_definition.containers.family
     container_port   = var.ecs_task_port
   }

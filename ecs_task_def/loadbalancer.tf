@@ -52,6 +52,6 @@ resource "aws_lb_listener" "listener" {
   protocol          = (var.public_endpoint_ports[0] == 80 || var.public_endpoint_ports[0] == 9080) ? "HTTP" : "HTTPS"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.service_tg.*.arn
+    target_group_arn = aws_lb_target_group.service_tg[0].arn
   }
 }
