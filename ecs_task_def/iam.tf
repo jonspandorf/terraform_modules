@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 resource "aws_iam_policy" "ecs_exec_policy" {
 
-  name = "ecs_exec_policy"
+  name = "${var.task_role_name}_ecs_exec_policy"
  
   policy = jsonencode({
     Version = "2012-10-17"
