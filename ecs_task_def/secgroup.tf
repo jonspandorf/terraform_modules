@@ -7,7 +7,7 @@ resource "aws_security_group" "allow_public_traffic" {
     from_port       = var.container_port
     to_port         = var.container_port
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.loadbalancer-securitygroup.id}"]
+    security_groups = ["${aws_security_group.loadbalancer-securitygroup.*.id}"]
   }
 
   egress {
