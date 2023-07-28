@@ -3,7 +3,7 @@ resource "aws_alb" "public_gw" {
   name               = var.loadbalancer_name
   load_balancer_type = "application"
   subnets            = var.use_default_vpc ? aws_default_subnet.public_subnets.*.id : var.PUBLIC_SUBNETS
-  security_groups    = ["${aws_security_group.loadbalancer-securitygroup.*.id}"]
+  security_groups    = ["${aws_security_group.loadbalancer-securitygroup[0].id}"]
 }
 
 resource "aws_security_group" "loadbalancer-securitygroup" {
